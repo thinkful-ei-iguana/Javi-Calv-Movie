@@ -31,18 +31,20 @@ function requireAuth(req, res, next) {
 }
 
 app.get("/movie", requireAuth, (req, res) => {
+    let response = movies
     const genre = req.query.genre;
     const country = req.query.country;
     const avg_vote = req.query.avg_vote;
 
+
     if(genre){
         console.log(genre)
-        movies = movies.filter(movie => movie.genre.toLowerCase().includes(req.query.genre.toLowerCase()))
+        response = response.filter(movie => movie.genre.toLowerCase().includes(req.query.genre.toLowerCase()))
     }
 
 
 
-  res.json(movies);
+  res.json(response);
 });
 
 app.listen(8000, () => console.log("listening to server"));
