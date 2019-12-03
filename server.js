@@ -1,16 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const cors = require("cors");
 const helmet = require("helmet");
+const cors = require("cors");
 
 const movies = require("./movieData");
 
 const app = express();
 
 app.use(morgan("dev"));
-app.use(cors());
 app.use(helmet());
+app.use(cors());
 
 function requireAuth(req, res, next) {
   const authVal = req.get("Authorization") || "";
@@ -29,7 +29,7 @@ function requireAuth(req, res, next) {
   next();
 }
 
-app.get("/movie", (req, res) => {
+app.get("/movie", requireAuth, (req, res) => {
   res.json(movies);
 });
 
